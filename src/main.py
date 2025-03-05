@@ -16,33 +16,32 @@ from mtcnn import MTCNN
 # plt.axis('off');plt.title('Grayscale Image')
 #
 # plt.show()
-
+# check and create folder 
 result_path = "result/extracted_facial"
 if not os.path.exists(result_path):
     os.makedirs(result_path)
 
-
 # โหลด MTCNN detector
-# โหลดรูปภาพ
-image_path = "images/acne5.jpg"  # เปลี่ยนเป็น path ของรูปภาพ
+# load image
+image_path = "images/acne5.jpg" 
 image = cv2.imread(image_path)
-image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # แปลงเป็น RGB
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
 
-# ตรวจจับใบหน้า
+# extract facial
 detector = MTCNN()
 detections = detector.detect_faces(image_rgb)
 
-# แสดงผลลัพธ์
+# show result
 fig, axes = plt.subplots(1, len(detections) + 1, figsize=(5 * (len(detections) + 1), 5))
 
-# แสดงภาพต้นฉบับในช่องแรก
+# show original image 
 axes[0].imshow(image_rgb)
 axes[0].set_title("Original Image")
 axes[0].axis("off")
 
 # ตรวจสอบว่ามีโฟลเดอร์สำหรับเซฟผลลัพธ์หรือไม่
-output_folder = "result/extracted_facial"
-os.makedirs(output_folder, exist_ok=True)
+# output_folder = "result/extracted_facial"
+# os.makedirs(output_folder, exist_ok=True)
 
 # วนลูปผ่านทุกใบหน้าที่ตรวจพบ
 for i, face in enumerate(detections):
@@ -55,7 +54,7 @@ for i, face in enumerate(detections):
     axes[i + 1].axis("off")
 
     # บันทึกไฟล์
-    output_path = f"{output_folder}/cropped_face_{i}.jpg"
+    output_path = f"result/extracted_facial/cropped_face_{i}.jpg"
     cv2.imwrite(output_path, cv2.cvtColor(cropped_face, cv2.COLOR_RGB2BGR))
 
 # แสดงผลทั้งหมด
