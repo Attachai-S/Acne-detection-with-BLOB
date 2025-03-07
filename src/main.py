@@ -25,6 +25,7 @@ if not os.path.exists(final_result_path):
 image_path = "images/acne6.jpg"
 output_MTCNN_path = f"result/extracted_facial/cropped_face.jpg"
 shape_predictor_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\shape_predictor_68_face_landmarks.dat" #for dlib
+output_dlib_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial\marked_face.jpg"
 ''' Important path '''
 
 ''' MTCNN '''
@@ -72,7 +73,7 @@ FACIAL_LANDMARKS_INDEXES = OrderedDict([
 
 # โหลด Dlib's face detector และ Landmark predictor
 shape_predictor_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\shape_predictor_68_face_landmarks.dat"
-image_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\extracted_facial\cropped_face.jpg"
+# image_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\extracted_facial\cropped_face.jpg"
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(shape_predictor_path)
@@ -109,6 +110,6 @@ for (i, rect) in enumerate(rects):
 # Mask to original image
 dlib_result = cv2.bitwise_and(cropped_face, cropped_face, mask=mask)
 
-output_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial\marked_face.jpg"
-cv2.imwrite(output_path, cv2.cvtColor(dlib_result, cv2.COLOR_RGB2BGR))
+# output_dlib_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial\marked_face.jpg"
+cv2.imwrite(output_dlib_path, cv2.cvtColor(dlib_result, cv2.COLOR_RGB2BGR))
 ''' dlib '''
