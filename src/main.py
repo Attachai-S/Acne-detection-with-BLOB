@@ -29,8 +29,7 @@ output_dlib_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\
 ''' Important path '''
 
 ''' MTCNN '''
-# โหลด MTCNN detector
-# load image
+# load MTCNN detector
 image = cv2.imread(image_path)
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
 
@@ -90,7 +89,7 @@ rects = detector(gray, 1)
 mask = np.ones(cropped_face.shape[:2], dtype="uint8") * 255  # ค่า 255 คือเก็บส่วนที่ต้องการไว้
 
 def shape_to_numpy_array(shape, dtype="int"):
-    """แปลง Dlib Shape Object เป็น NumPy Array"""
+    """transform Dlib Shape Object into NumPy Array"""
     coordinates = np.zeros((68, 2), dtype=dtype)
     for i in range(0, 68):
         coordinates[i] = (shape.part(i).x, shape.part(i).y)
@@ -105,7 +104,7 @@ for (i, rect) in enumerate(rects):
     for (name, (j, k)) in FACIAL_LANDMARKS_INDEXES.items():
         pts = shape[j:k]
         hull = cv2.convexHull(pts)
-        cv2.drawContours(mask, [hull], -1, 0, -1)  # วาดสีดำในจุดที่ต้องการลบ
+        cv2.drawContours(mask, [hull], -1, 0, -1)  # mask black position
 
 # Mask to original image
 dlib_result = cv2.bitwise_and(cropped_face, cropped_face, mask=mask)
