@@ -3,12 +3,9 @@ import dlib
 import numpy as np
 import imutils
 from collections import OrderedDict
-
-from src.test import shape_predictor_path
-
 # from google.colab.patches import cv2_imshow  # ใช้สำหรับ Google Colab
 
-# กำหนดจุด Landmark ที่ต้องการลบ
+
 FACIAL_LANDMARKS_INDEXES = OrderedDict([
     ("Mouth", (48, 68)),
     ("Right_Eye", (36, 42)),
@@ -17,8 +14,7 @@ FACIAL_LANDMARKS_INDEXES = OrderedDict([
 
 # โหลด Dlib's face detector และ Landmark predictor
 shape_predictor_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\shape_predictor_68_face_landmarks.dat"
-# shape_predictor_path = r"src\shape_predictor_68_face_landmarks.dat"
-image_path = r"src\result\extracted_facial\cropped_face_0.jpg"
+image_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\extracted_facial\cropped_face_0.jpg"
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(shape_predictor_path)
@@ -52,13 +48,8 @@ for (i, rect) in enumerate(rects):
         hull = cv2.convexHull(pts)
         cv2.drawContours(mask, [hull], -1, 0, -1)  # วาดสีดำในจุดที่ต้องการลบ
 
-# ใช้ Mask เพื่อลบดวงตาและปากออกจากภาพ
+# Mask to original image
 result = cv2.bitwise_and(image, image, mask=mask)
 
-
-# แสดงผลลัพธ์
-cv2.imshow(result)
-cv2.waitKey(0)
-# cv2.destroyAllWindows()
-# output_path = f"marked_face_{i}.jpg"
-# cv2.imwrite(output_path, cv2.cvtColor(cropped_face, cv2.COLOR_RGB2BGR))
+output_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\extracted_facial\marked_face.jpg"
+cv2.imwrite(output_path, cv2.cvtColor(result, cv2.COLOR_RGB2BGR))

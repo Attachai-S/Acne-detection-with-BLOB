@@ -8,7 +8,7 @@ from collections import OrderedDict
 import numpy as np
 
 # โหลดรูปภาพ
-image_path = "images/acne5.jpg"  # เปลี่ยนเป็น path ของรูปภาพ
+image_path = "images/acne2.jpg"  # เปลี่ยนเป็น path ของรูปภาพ
 image = cv2.imread(image_path)
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # แปลงเป็น RGB
 
@@ -58,7 +58,7 @@ FACIAL_LANDMARKS_INDEXES = OrderedDict([
     ("Right_Eye", (36, 42)),
     ("Left_Eye", (42, 48)),
     # ("Nose", (27, 35)),
-    ("Jaw", (0, 17))
+    # ("Jaw", (0, 17))
 ])
 
 # Instead, directly define the paths:
@@ -88,9 +88,11 @@ def visualize_facial_landmarks(image, shape, colors=None, alpha=0.75):
     # if the colors list is None, initialize it with a unique
     # color for each facial landmark region
     if colors is None:
-        colors = [(19, 199, 109), (79, 76, 240), (230, 159, 23),
-                  (168, 100, 168), (158, 163, 32),
-                  (163, 38, 32), (180, 42, 220)]
+        # colors = [(30, 31, 34), (30, 31, 34), (30, 31, 34),
+        #           (30, 31, 34), (30, 31, 34),(30, 31, 34),
+        #           (30, 31, 34)]
+        colors = [(0,0,0), (0,0,0), (0,0,0), (0,0,0),
+                  (0,0,0), (0,0,0), (0,0,0),]
 
     # loop over the facial landmark regions individually
     for (i, name) in enumerate(FACIAL_LANDMARKS_INDEXES.keys()):
