@@ -113,3 +113,7 @@ dlib_result = cv2.bitwise_and(cropped_face, cropped_face, mask=mask)
 # output_dlib_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial\marked_face.jpg"
 cv2.imwrite(output_dlib_path, cv2.cvtColor(dlib_result, cv2.COLOR_RGB2BGR))
 ''' dlib '''
+
+''' BLOB '''
+
+''' BLOB '''
