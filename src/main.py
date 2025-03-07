@@ -22,10 +22,11 @@ if not os.path.exists(final_result_path):
     os.makedirs(final_result_path)
 
 ''' Important path '''
-image_path = "images/acne6.jpg"
+image_path = "images/acne2.jpg"
 output_MTCNN_path = f"result/extracted_facial/cropped_face.jpg"
 shape_predictor_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\shape_predictor_68_face_landmarks.dat" #for dlib
 output_dlib_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial\marked_face.jpg"
+blob_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\final_result\final.jpg"
 ''' Important path '''
 
 ''' MTCNN '''
@@ -56,8 +57,7 @@ for i, face in enumerate(detections):
     axes[i + 1].set_title(f"Extracted_facial")
     axes[i + 1].axis("off")
 
-    # บันทึกไฟล์
-    output_MTCNN_path = f"result/extracted_facial/cropped_face.jpg"
+    # output_MTCNN_path = f"result/extracted_facial/cropped_face.jpg"
     cv2.imwrite(output_MTCNN_path, cv2.cvtColor(cropped_face, cv2.COLOR_RGB2BGR))
 
 # show MTCNN result
@@ -158,8 +158,9 @@ axes[0].axis("off")
 axes[1].imshow(cv2.cvtColor(image_with_blobs, cv2.COLOR_BGR2RGB))
 axes[1].set_title("BLOB Detected (Acne Spots)")
 axes[1].axis("off")
-o_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\final_result\final.jpg"
-cv2.imwrite(o_path, cv2.cvtColor(image_with_blobs, cv2.COLOR_BGR2RGB))
+# blob_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\final_result\final.jpg"
+# cv2.imwrite(blob_path, cv2.cvtColor(image_with_blobs, cv2.COLOR_RGB2BGR))
+cv2.imwrite(blob_path, image_with_blobs)
 plt.show()
 
 print(f"\nจำนวนสิวที่ตรวจพบ: {len(keypoints)}")
