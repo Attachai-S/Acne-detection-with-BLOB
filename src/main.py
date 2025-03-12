@@ -8,12 +8,14 @@ import imutils
 from collections import OrderedDict
 '''
 this is for single image processing by step:
-MTCNN (Region of interest) -> mark facial feature with dlib -> acne detection with BLOB  
+MTCNN (Region of interest) -> mark facial feature with dlib -> acne detection with BLOB 
 '''
 
 ''' create important directory for result'''
-extract_path, marked_path, final_result_path = ("result/extracted_facial", "result/marked_facial",
+result_path, extract_path, marked_path, final_result_path = ("src/result", "result/extracted_facial", "result/marked_facial",
                                                 "result/final_result")
+if not os.path.exists(result_path):
+    os.makedirs(result_path)
 if not os.path.exists(extract_path):
     os.makedirs(extract_path)
 if not os.path.exists(marked_path):
