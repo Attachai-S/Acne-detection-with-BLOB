@@ -24,7 +24,7 @@ if not os.path.exists(final_result_path):
     os.makedirs(final_result_path)
 
 ''' Important path '''
-image_path = "images/acne2.jpg"
+image_path = "images/smo_3.jpg"
 output_MTCNN_path = f"result/extracted_facial/cropped_face.jpg"
 shape_predictor_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\shape_predictor_68_face_landmarks.dat" #for dlib
 output_dlib_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial\marked_face.jpg"
@@ -35,7 +35,7 @@ blob_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\final_r
 # โหลด MTCNN detector
 # load image
 image = cv2.imread(image_path)
-image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 # extract facial by MTCNN
 detector = MTCNN()
@@ -45,9 +45,9 @@ detections = detector.detect_faces(image_rgb)
 fig, axes = plt.subplots(1, len(detections) + 1, figsize=(5 * (len(detections) + 1), 5))
 
 # show original image 
-axes[0].imshow(image_rgb)
-axes[0].set_title("Original Image")
-axes[0].axis("off")
+# axes[0].imshow(image_rgb)
+# axes[0].set_title("Original Image")
+# axes[0].axis("off")
 
 # วนลูปผ่านทุกใบหน้าที่ตรวจพบ
 for i, face in enumerate(detections):
@@ -55,9 +55,9 @@ for i, face in enumerate(detections):
     cropped_face = image_rgb[y:y+h, x:x+w]  # ตัดเฉพาะส่วนของใบหน้า
 
     # แสดงภาพใบหน้าที่ถูกตัด
-    axes[i + 1].imshow(cropped_face)
-    axes[i + 1].set_title(f"Extracted_facial")
-    axes[i + 1].axis("off")
+    # axes[i + 1].imshow(cropped_face)
+    # axes[i + 1].set_title(f"Extracted_facial")
+    # axes[i + 1].axis("off")
 
     # output_MTCNN_path = f"result/extracted_facial/cropped_face.jpg"
     cv2.imwrite(output_MTCNN_path, cv2.cvtColor(cropped_face, cv2.COLOR_RGB2BGR))
@@ -69,6 +69,8 @@ for i, face in enumerate(detections):
 ''' dlib '''
 FACIAL_LANDMARKS_INDEXES = OrderedDict([
     ("Mouth", (48, 68)),
+    ("Right_Eyebrow", (17, 22)),
+    ("Left_Eyebrow", (22, 27)),
     ("Right_Eye", (36, 42)),
     ("Left_Eye", (42, 48))
 ])
@@ -152,20 +154,22 @@ image_with_blobs = cv2.drawKeypoints(face, keypoints, np.array([]), (0, 255, 0),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 # แสดงผลลัพธ์
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+#
+# axes[0].imshow(cv2.cvtColor(face, cv2.COLOR_BGR2RGB))
+# axes[0].set_title("Original Image")
+# axes[0].axis("off")
 
-axes[0].imshow(cv2.cvtColor(face, cv2.COLOR_BGR2RGB))
-axes[0].set_title("Original Image")
-axes[0].axis("off")
-
-axes[1].imshow(cv2.cvtColor(image_with_blobs, cv2.COLOR_BGR2RGB))
-axes[1].set_title("BLOB Detected (Acne Spots)")
-axes[1].axis("off")
+# axes[1].imshow(cv2.cvtColor(image_with_blobs, cv2.COLOR_BGR2RGB))
+# axes[1].set_title("BLOB Detected (Acne Spots)")
+# axes[1].axis("off")
 # blob_path = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\final_result\final.jpg"
 # cv2.imwrite(blob_path, cv2.cvtColor(image_with_blobs, cv2.COLOR_RGB2BGR))
 cv2.imwrite(blob_path, image_with_blobs)
-plt.show()
 
-print(f"\nจำนวนสิวที่ตรวจพบ: {len(keypoints)}")
+# plt.show()
+
+print(f"\nacne spot detected "
+      f": {len(keypoints)}")
 
 for i, kp in enumerate(keypoints):
      x, y = kp.pt  # ตำแหน่งจุด (X, Y)
