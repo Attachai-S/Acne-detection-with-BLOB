@@ -42,8 +42,6 @@ for runnumber, image_file in enumerate(image_files):
     detector = MTCNN()
     detections = detector.detect_faces(image_rgb)
 
-    fig, axes = plt.subplots(1, len(detections) + 1, figsize=(5 * (len(detections) + 1), 5))
-
     for i, face in enumerate(detections):
         x, y, w, h = face['box']  # bounding box
         cropped_face = image_rgb[y:y + h, x:x + w]  # ตัดเฉพาะส่วนของใบหน้า
@@ -114,7 +112,6 @@ for runnumber, image_file in enumerate(image_files):
 
     ''' BLOB '''
 marked_folder = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial"
-
 marked_image_files = [f for f in os.listdir(marked_folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
 
 for runnumber, image_file in enumerate(marked_image_files):
@@ -126,10 +123,6 @@ for runnumber, image_file in enumerate(marked_image_files):
     image = cv2.imread(image_path)
 
     ''' BLOB '''
-    # BLOB Detection
-    # img = r"C:\cygwin64\home\vangu\Acne-detection-with-BLOB\src\result\marked_facial\marked_face.jpg"
-    # face = cv2.imread(output_dlib_path)
-    # #read from GRABCUT segment
     gray_segmented = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # Denoise with Gaussian Blur
     blurred = cv2.GaussianBlur(gray_segmented, (5, 5), 0)
@@ -139,7 +132,7 @@ for runnumber, image_file in enumerate(marked_image_files):
 
     params.filterByArea = True
     params.minArea = 10  # ขนาด BLOB ขั้นต่ำ (min "detect every = plx")
-    params.maxArea = 2000  # ขนาด BLOB สูงสุด (max "--")
+    params.maxArea = 1500  # ขนาด BLOB สูงสุด (max "--")
 
     params.filterByCircularity = True
     params.minCircularity = 0.2  # ให้ BLOB มีความกลมบางระดับ
@@ -163,7 +156,7 @@ for runnumber, image_file in enumerate(marked_image_files):
     cv2.imwrite(output_final_result, image_with_blobs)
 
 
-    print(f"\nacne spot detected "
+    print(f"iamge {runnumber} acne spot detected "
           f": {len(keypoints)}")
 
     # for i, kp in enumerate(keypoints):
